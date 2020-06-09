@@ -96,7 +96,8 @@ public class DVDCollectionController {
         } // -- WHILE LOOP --
         exitMessage();
       } catch (DVDCollectionPersistenceException e){
-          view.displayErrorMessage(e.getMessage());
+          //view.displayErrorMessage(e.getMessage());
+          run();
       }        
         
     } // -- run METHOD --
@@ -135,7 +136,8 @@ public class DVDCollectionController {
         } // -- WHILE LOOP --
         exitMessage();
       } catch (DVDCollectionPersistenceException e){
-          view.displayErrorMessage(e.getMessage());
+          //view.displayErrorMessage(e.getMessage());
+          addEditAndDelete();
       }  
     }    
     
