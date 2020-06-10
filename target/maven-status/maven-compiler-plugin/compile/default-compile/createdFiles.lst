@@ -1,0 +1,9 @@
+com\sg\dvdcollection\dao\DVDCollectionDaoFileImpl.class
+com\sg\dvdcollection\App.class
+com\sg\dvdcollection\dto\Movies.class
+com\sg\dvdcollection\ui\UserIO.class
+com\sg\dvdcollection\dao\DVDCollectionDao.class
+com\sg\dvdcollection\dao\DVDCollectionPersistenceException.class
+com\sg\dvdcollection\ui\UserIOConsoleImpl.class
+com\sg\dvdcollection\ui\DVDCollectionView.class
+com\sg\dvdcollection\controller\DVDCollectionController.class

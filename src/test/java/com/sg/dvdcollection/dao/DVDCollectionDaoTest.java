@@ -6,7 +6,10 @@
 package com.sg.dvdcollection.dao;
 
 import com.sg.dvdcollection.dto.Movies;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import static javax.print.attribute.Size2DSyntax.MM;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -53,7 +56,12 @@ public class DVDCollectionDaoTest {
     @Test
     public void testAddGetDVD() throws Exception {
         Movies movie = new Movies("Space Jam");
-        //movie.setReleaseDate("March 1996");
+        String rDate = "11-11-2011";
+        LocalDate releaseDate; 
+       
+       // -- Date Conversion --
+        releaseDate = LocalDate.parse(rDate, DateTimeFormatter.ofPattern("MM-dd-yyyy"));        
+        movie.setReleaseDate(releaseDate);       
         movie.setmPAARating("100");
         movie.setDirectorName("Jordan");
         movie.setStudio("Hollywood");
@@ -73,7 +81,12 @@ public class DVDCollectionDaoTest {
     @Test
     public void testDeleteDVD() throws Exception {
         Movies movie1 = new Movies("Space Jam");
-        //movie1.setReleaseDate("March 1996");
+        String rDate = "11-11-2012";
+        LocalDate releaseDate; 
+       
+       // -- Date Conversion --
+        releaseDate = LocalDate.parse(rDate, DateTimeFormatter.ofPattern("MM-dd-yyyy"));        
+        movie1.setReleaseDate(releaseDate);
         movie1.setmPAARating("100");
         movie1.setDirectorName("Jordan");
         movie1.setStudio("Hollywood");
@@ -81,8 +94,14 @@ public class DVDCollectionDaoTest {
         // -- Add Movie --
         dao.addDVD(movie1.getTitle(), movie1);
         
+        
         Movies movie2 = new Movies("Dog Bam");
-        //movie2.setReleaseDate("April 2000");
+        String rDate2 = "12-12-2012";
+        //LocalDate releaseDate; 
+       
+       // -- Date Conversion --
+        releaseDate = LocalDate.parse(rDate2, DateTimeFormatter.ofPattern("MM-dd-yyyy"));        
+        movie2.setReleaseDate(releaseDate);
         movie2.setmPAARating("79");
         movie2.setDirectorName("Jack");
         movie2.setStudio("Hollywood");
@@ -106,6 +125,12 @@ public class DVDCollectionDaoTest {
     @Test
     public void testListAllDVD() throws Exception {
         Movies movie1 = new Movies("Space Jam");
+        String rDate2 = "12-12-2012";
+        LocalDate releaseDate; 
+       
+       // -- Date Conversion --
+        releaseDate = LocalDate.parse(rDate2, DateTimeFormatter.ofPattern("MM-dd-yyyy"));        
+        movie1.setReleaseDate(releaseDate);
         //movie1.setReleaseDate("March 1996");
         movie1.setmPAARating("100");
         movie1.setDirectorName("Jordan");
@@ -115,6 +140,12 @@ public class DVDCollectionDaoTest {
         dao.addDVD(movie1.getTitle(), movie1);
         
         Movies movie2 = new Movies("Dog Bam");
+        rDate2 = "12-12-2012";
+        //LocalDate releaseDate; 
+       
+       // -- Date Conversion --
+        releaseDate = LocalDate.parse(rDate2, DateTimeFormatter.ofPattern("MM-dd-yyyy"));        
+        movie2.setReleaseDate(releaseDate);
         //movie2.setReleaseDate("April 2000");
         movie2.setmPAARating("79");
         movie2.setDirectorName("Jack");
