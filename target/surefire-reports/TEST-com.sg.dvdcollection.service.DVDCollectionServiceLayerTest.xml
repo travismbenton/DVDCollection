@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="3" failures="0" name="com.sg.dvdcollection.dao.DVDCollectionDaoTest" time="0.051" errors="0" skipped="0">
+<testsuite tests="14" failures="0" name="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest" time="0" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="13.0.2+8"/>
@@ -59,7 +59,18 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.sg.dvdcollection.dao.DVDCollectionDaoTest" name="com.sg.dvdcollection.dao.DVDCollectionDaoTest.testDeleteDVD" time="0.051"/>
-  <testcase classname="com.sg.dvdcollection.dao.DVDCollectionDaoTest" name="com.sg.dvdcollection.dao.DVDCollectionDaoTest.testListAllDVD" time="0"/>
-  <testcase classname="com.sg.dvdcollection.dao.DVDCollectionDaoTest" name="com.sg.dvdcollection.dao.DVDCollectionDaoTest.testAddGetDVD" time="0"/>
+  <testcase classname="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest" name="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest.testGetMoviesOlderThanGroupByTitle" time="0"/>
+  <testcase classname="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest" name="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest.testDeleteDVD" time="0"/>
+  <testcase classname="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest" name="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest.testListAllDVD" time="0"/>
+  <testcase classname="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest" name="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest.testCreateDVDDuplicateTitle" time="0"/>
+  <testcase classname="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest" name="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest.testCreateDVDInvalidData" time="0"/>
+  <testcase classname="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest" name="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest.testGetAllMoviesGroupByTitle" time="0"/>
+  <testcase classname="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest" name="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest.testGetMoviesOlderThan" time="0"/>
+  <testcase classname="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest" name="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest.testGetMoviesByTitle" time="0"/>
+  <testcase classname="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest" name="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest.testGetMoviesNewerThan" time="0"/>
+  <testcase classname="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest" name="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest.testGetMoviesByMPAARating" time="0"/>
+  <testcase classname="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest" name="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest.testGetMoviesByStudio" time="0"/>
+  <testcase classname="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest" name="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest.testGetAverageMovieAge" time="0"/>
+  <testcase classname="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest" name="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest.testGetMoviesByDirectorName" time="0"/>
+  <testcase classname="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest" name="com.sg.dvdcollection.service.DVDCollectionServiceLayerTest.testFindDVD" time="0"/>
 </testsuite>

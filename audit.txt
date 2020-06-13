@@ -1,0 +1,7 @@
+2020-06-12T18:19:42.306839600 : Movie NewDVD CREATED.
+2020-06-12T18:28:06.086828900 : Movie NewDVD EDITED.
+2020-06-12T21:56:57.841708900 : editDVD: DVD: Dog Bam |Release Date: 2010-10-10 |MPAA Rating: R |Director Name Will |Studio: Studio 4|User Rating None
+2020-06-12T21:59:15.975593200 : createDVD: DVD: ZayDay |Release Date: 2020-02-12 |MPAA Rating: pg13 |Director Name None |Studio: None|User Rating None
+2020-06-12T21:59:35.829661900 : deleteDVD: ZayDay
+2020-06-12T22:35:55.462141600 : createDVD: DVD: Perfect |Release Date: 2020-06-12 |MPAA Rating: pg |Director Name none |Studio: d|User Rating d
+2020-06-12T22:47:56.360885800 : editDVD: DVD: Perfect |Release Date: 2012-01-01 |MPAA Rating: PG |Director Name Smith |Studio: 56|User Rating None

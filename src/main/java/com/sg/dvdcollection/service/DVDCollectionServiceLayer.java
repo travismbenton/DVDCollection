@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.dvdcollection.dao;
+package com.sg.dvdcollection.service;
 
+import com.sg.dvdcollection.dao.DVDCollectionPersistenceException;
 import com.sg.dvdcollection.dto.Movies;
 import java.util.List;
 import java.util.Map;
@@ -13,12 +14,16 @@ import java.util.Map;
  *
  * @author travi
  */
-public interface DVDCollectionDao { 
+public interface DVDCollectionServiceLayer {
     
-    // -- Stores the DTO "Movies" --
+    public void createDVD(Movies dvd) throws
+            DVDCollectionDuplicateIdException,
+            DVDCollectionDataValidationException,
+            DVDCollectionPersistenceException;
     
-    public Movies addDVD(String title, Movies dvd) throws
-             DVDCollectionPersistenceException;
+    public void editDVD(Movies dvd) throws 
+            DVDCollectionPersistenceException,
+            DVDCollectionDataValidationException;
             
     
     public List<Movies> listAllDVD() throws
@@ -31,9 +36,8 @@ public interface DVDCollectionDao {
     
     public Movies deleteDVD(String title) throws
              DVDCollectionPersistenceException;
-                   
-     
-   
+    
+    
     // -- Lambdas, Streams, and Aggregate Operations Section --
     
     
@@ -62,7 +66,6 @@ public interface DVDCollectionDao {
             throws DVDCollectionPersistenceException;
     
     public double getAverageMovieAge() // Average Age of Movie
-            throws DVDCollectionPersistenceException;    
-    
+            throws DVDCollectionPersistenceException; 
     
 }

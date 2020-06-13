@@ -16,6 +16,7 @@
           http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
 
     <!-- Bean definitions go here -->
+    
     <bean id="userIO" 
           class="com.sg.dvdcollection.ui.UserIOConsoleImpl"/>
         
@@ -27,10 +28,45 @@
     <bean id="dao" 
           class="com.sg.dvdcollection.dao.DVDCollectionDaoFileImpl"/>
     
+    <bean id="auditDao" 
+          class="com.sg.dvdcollection.dao.DVDCollectionAuditDaoImpl"/>
+    
+    <bean id="serviceLayer" 
+          class="com.sg.dvdcollection.service.DVDCollectionServiceLayerImpl">
+        <constructor-arg ref="dao"/>
+        <constructor-arg ref="auditDao"/>
+    </bean>
+    
     <bean id="controller" 
           class="com.sg.dvdcollection.controller.DVDCollectionController">
-        <constructor-arg ref="dao"/>
+        <constructor-arg ref="serviceLayer"/>
         <constructor-arg ref="view"/>
     </bean>
-   
+    
+    <bean id="loggingAdvice" class="com.sg.dvdcollection.advice.LoggingAdvice">
+        <constructor-arg ref="auditDao"/>
+    </bean>
+    
+    <aop:config>
+        <aop:aspect ref="loggingAdvice">
+            <aop:after-returning
+                method="createAuditEntry"
+                pointcut="execution(* com.sg.dvdcollection.service.DVDCollectionServiceLayer.createDVD(..))"
+            />
+         
+            <aop:after-returning
+                method="createAuditEntry"
+                
+                pointcut="execution(* com.sg.dvdcollection.service.DVDCollectionServiceLayer.deleteDVD(..))"
+            />
+            
+            <aop:after-returning
+                method="createAuditEntry"
+                
+                pointcut="execution(* com.sg.dvdcollection.service.DVDCollectionServiceLayer.editDVD(..))"
+            />
+           
+        </aop:aspect>
+    </aop:config>
+       
 </beans>

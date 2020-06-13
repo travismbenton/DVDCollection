@@ -133,7 +133,12 @@ public class Movies {
     }
 
     
-    
+        @Override
+        public String toString() {
+        return "DVD: " + title + " |Release Date: " + releaseDate + " |MPAA Rating: " + mPAARating + " |Director Name " 
+                + directorName + " |Studio: " + studio + "|User Rating " + userRating;
+}
+
     
     
 }

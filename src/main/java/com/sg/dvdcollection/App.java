@@ -21,11 +21,16 @@ public class App {
         DVDCollectionController controller = ctx.getBean("controller", DVDCollectionController.class);
         controller.run();
         
-        //UserIO myIo = new UserIOConsoleImpl();        
-        //DVDCollectionView myView = new DVDCollectionView(myIo); 
-        //DVDCollectionDao myDao = new DVDCollectionDaoFileImpl();        
-        //DVDCollectionController controller = 
-                //new DVDCollectionController(myDao, myView);
-        //controller.run();
+        /*
+        UserIO myIo = new UserIOConsoleImpl();        
+        DVDCollectionView myView = new DVDCollectionView(myIo); 
+        DVDCollectionDao myDao = new DVDCollectionDaoFileImpl();
+        DVDCollectionAuditDao myAuditDao = new DVDCollectionAuditDaoImpl();
+        DVDCollectionServiceLayer myService =  
+                new DVDCollectionServiceLayerImpl(myDao, myAuditDao);
+        DVDCollectionController controller = 
+                new DVDCollectionController(myService, myView);
+        controller.run();
+        */
     }
 }

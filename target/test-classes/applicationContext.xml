@@ -16,5 +16,15 @@
           http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
 
     <!-- Bean definitions go here -->
+    
+    <bean id="daoStub" 
+          class="com.sg.dvdcollection.dao.DVDCollectionDaoStubImpl"/>
+    
+    <bean id="auditDaoStub" class="com.sg.dvdcollection.dao.DVDCollectionAuditDaoStubImpl"/>
+    
+    <bean id="serviceLayer" class="com.sg.dvdcollection.service.DVDCollectionServiceLayerImpl">
+        <constructor-arg ref="daoStub"/>
+        <constructor-arg ref="auditDaoStub"/>
+    </bean>
    
 </beans>

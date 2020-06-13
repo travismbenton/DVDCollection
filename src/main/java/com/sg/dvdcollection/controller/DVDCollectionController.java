@@ -8,11 +8,12 @@ package com.sg.dvdcollection.controller;
 import com.sg.dvdcollection.dao.DVDCollectionDao;
 import com.sg.dvdcollection.dao.DVDCollectionPersistenceException;
 import com.sg.dvdcollection.dto.Movies;
+import com.sg.dvdcollection.service.DVDCollectionDataValidationException;
+import com.sg.dvdcollection.service.DVDCollectionDuplicateIdException;
+import com.sg.dvdcollection.service.DVDCollectionServiceLayer;
 import com.sg.dvdcollection.ui.DVDCollectionView;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  *
@@ -20,13 +21,13 @@ import java.util.Set;
  */
 public class DVDCollectionController {      
     
-    DVDCollectionDao dao;
+    DVDCollectionServiceLayer service;
     DVDCollectionView view;
     
     // -- Constructor --
-    public DVDCollectionController(DVDCollectionDao dao,
+    public DVDCollectionController(DVDCollectionServiceLayer service,
             DVDCollectionView view){
-        this.dao = dao;
+        this.service = service;
         this.view = view;        
     }
     // -- "END" Constructor --
@@ -169,9 +170,20 @@ public class DVDCollectionController {
     // -- Add DVD Section --    
     private void addDVD() throws DVDCollectionPersistenceException {
 	view.displayAddDVDBanner();
-	Movies newDVD = view.getNewDVDInfo();
-        dao.addDVD(newDVD.getTitle(), newDVD);
-	view.displayAddDVDSuccessfulBanner();
+        boolean hasErrors = false;
+        do {
+            Movies newDVD = view.getNewDVDInfo();
+         try{ 
+            service.createDVD(newDVD);
+            view.displayAddDVDSuccessfulBanner();
+            hasErrors = false;
+        } catch(DVDCollectionDuplicateIdException | 
+            DVDCollectionDataValidationException e){
+            hasErrors = true;
+            view.displayErrorMessage(e.getMessage());
+        }
+         
+       }while (hasErrors); 
     } 
     // -- "END" Add DVD Section -- 
     
@@ -180,7 +192,7 @@ public class DVDCollectionController {
     // -- List-All DVD's Section -- 
     private void listAllDVD()throws DVDCollectionPersistenceException {
        view.displayListAllDVDBanner();
-       List<Movies> dvdList = dao.listAllDVD();
+       List<Movies> dvdList = service.listAllDVD();
        view.displayDVDList(dvdList);       
     }    
     // -- "END" List-All DVD's Section -- 
@@ -191,7 +203,7 @@ public class DVDCollectionController {
     private void searchForDVD()throws DVDCollectionPersistenceException {
         view.displayFindDVDBanner();
         String title = view.getDVDTitleChoice();
-        Movies dvd = dao.findDVD(title);
+        Movies dvd = service.findDVD(title);
         view.displayFindDVD(dvd);
     }    
     // -- "END" Find DVD Section --
@@ -202,7 +214,7 @@ public class DVDCollectionController {
     private void searchByTiteOnly()throws DVDCollectionPersistenceException {
         view.displayFindDVDByTitleBanner();
         String title = view.getDVDTitleChoice();
-        Movies dvd = dao.findDVD(title);
+        Movies dvd = service.findDVD(title);
         view.displayFindDVDByTitle(dvd);    
     }    
     // -- "END" Find DVD By Title Section --
@@ -213,7 +225,7 @@ public class DVDCollectionController {
     private void removeDVD()throws DVDCollectionPersistenceException {
         view.displayRemoveDVDBanner();
         String title = view.getDVDTitleChoice();
-        dao.deleteDVD(title);
+        service.deleteDVD(title);
         view.displayRemoveDVDSuccessfulBanner();
     }
     // -- "END" Remove Section --  
@@ -222,17 +234,19 @@ public class DVDCollectionController {
     
     // -- Edit DVD Section --
     private void editDVD() throws DVDCollectionPersistenceException {        
-        view.displayEditDVDBanner();       
-        String title = view.getDVDTitleChoice();
-        Movies dvd = dao.findDVD(title);
-        
-        view.displayFindDVD(dvd);
-        if(dvd != null){
-        Movies editDVD = view.getNewDVDInfo();
-        dao.addDVD(title, editDVD);
-        } else {
-            listAllDVD();
-        }
+        view.displayEditDVDBanner();
+        boolean hasErrors = false;
+        do{
+            Movies currentMovie = view.getNewDVDInfo();
+        try{
+            service.editDVD(currentMovie);
+            view.displayEditDVDSuccessfulBanner();
+                hasErrors = false;
+        } catch (DVDCollectionDataValidationException e) {
+                hasErrors = true;
+                view.displayErrorMessage(e.getMessage());
+            }               
+        } while (hasErrors);        
     }
     // -- "END" Edit DVD Section --
     
@@ -264,7 +278,7 @@ public class DVDCollectionController {
     private void averageAgeOfDVDs()throws DVDCollectionPersistenceException {
         view.displayAverageAgeOfDVDBanner();
         //List<Movies> dvdList = dao.listAllDVD();
-        double averageAge = dao.getAverageMovieAge();
+        double averageAge = service.getAverageMovieAge();
         System.out.println(averageAge);
     }    
     // -- "END" Average Age of DVD's Section --  
@@ -274,7 +288,7 @@ public class DVDCollectionController {
     // -- Newest DVD  Section --
     private void newestDVD()throws DVDCollectionPersistenceException {
         view.displayNewestDVDBanner();
-        List<Movies> maxMovies = dao.listAllDVD();
+        List<Movies> maxMovies = service.listAllDVD();
         
         Movies user1 = maxMovies.stream()                               
                                 .max(Comparator.comparing(m -> m.getReleaseDate())).get();
@@ -290,7 +304,7 @@ public class DVDCollectionController {
     private void oldestDVD()throws DVDCollectionPersistenceException {
         view.displayOldestDVDBanner();
         
-        List<Movies> maxMovies = dao.listAllDVD();
+        List<Movies> maxMovies = service.listAllDVD();
         
         Movies user2 = maxMovies.stream()                               
                                 .min(Comparator.comparing(m -> m.getReleaseDate())).get();
@@ -308,7 +322,7 @@ public class DVDCollectionController {
         view.displayNumberOfYearsDVDsReleasedBanner();
         
         int released = view.numberOfYears();
-        List<Movies> maxMovies = dao.getMoviesNewerThan(released);
+        List<Movies> maxMovies = service.getMoviesNewerThan(released);
         System.out.println(" Number of Movies Released: "+maxMovies.size());  
         maxMovies.stream()
                .forEach(m -> System.out.println("Title: "+m.getTitle()+" Year: "+m.getReleaseDate()));
@@ -330,7 +344,7 @@ public class DVDCollectionController {
          
         view.displaySearchByMPAARatingDVDBanner();        
         String selectRating = view.selectMPPARating();
-        List<Movies> rating = dao.getMoviesByMPAARating(selectRating.toUpperCase());
+        List<Movies> rating = service.getMoviesByMPAARating(selectRating.toUpperCase());
         rating.stream()
                 .forEach(m -> System.out.println("Title: "+m.getTitle()+" Rating: "+m.getmPAARating()));
     }
@@ -343,7 +357,7 @@ public class DVDCollectionController {
         
         view.displaySearchByStudioDVDBanner();
         String selectStudio = view.selectStudio();
-        List<Movies> studioName = dao.getMoviesByStudio(selectStudio);
+        List<Movies> studioName = service.getMoviesByStudio(selectStudio);
         studioName.stream()
                 .forEach(m -> System.out.println("Title: "+m.getTitle()+" Studio: "+m.getStudio()));
         
@@ -356,7 +370,7 @@ public class DVDCollectionController {
     private void searchByDirector()throws DVDCollectionPersistenceException {
         view.displaySearchByDirectorDVDBanner();
         String selectDirector = view.selectDirectorName();
-        List<Movies> director = dao.getMoviesByDirectorName(selectDirector);
+        List<Movies> director = service.getMoviesByDirectorName(selectDirector);
         director.stream()
                 .forEach(m -> System.out.println("Title: "+m.getTitle()+" Director Name: "+m.getDirectorName()));
     }

@@ -7,8 +7,10 @@ package com.sg.dvdcollection.ui;
 
 import com.sg.dvdcollection.dao.DVDCollectionPersistenceException;
 import com.sg.dvdcollection.dto.Movies;
+import com.sg.dvdcollection.service.DVDCollectionDataValidationException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -80,6 +82,7 @@ public class DVDCollectionView {
    
     // -- Add DVD Section --
     public Movies getNewDVDInfo() { // New "Info" from the User
+        
         String title = io.readString("Please enter DVD Title:");        
         String rDate = io.readString("Please enter Release Date:");        
         String mPAARating = io.readString("Please enter MPAA Rating:");
@@ -91,7 +94,7 @@ public class DVDCollectionView {
         Movies currentDVD = new Movies(title); // -- Title of the "New DVD"
     // -- Create a new "LocalDate" objects --            
         LocalDate releaseDate; 
-       
+       try{
        // -- Date Conversion --
         releaseDate = LocalDate.parse(rDate, DateTimeFormatter.ofPattern("MM-dd-yyyy"));        
         currentDVD.setReleaseDate(releaseDate);        
@@ -99,10 +102,14 @@ public class DVDCollectionView {
         currentDVD.setmPAARating(mPAARating);
         currentDVD.setDirectorName(directorName);
         currentDVD.setStudio(studio); 
-        currentDVD.setUserRating(userRating);        
+        currentDVD.setUserRating(userRating); 
         
-        return currentDVD;    
-    }            
+         
+       }catch (DateTimeParseException e){           
+              displayDateErrorMessage(e.getMessage());
+       }
+       return currentDVD;    
+    }   
     public void displayAddDVDBanner() {
 	io.print("=== Add New DVD ===");
     }	
@@ -189,7 +196,10 @@ public class DVDCollectionView {
     // -- Edit DVD Section --
     public void displayEditDVDBanner () {
 	    io.print("=== Edit DVD ===");
-    }    
+    } 
+    public void displayEditDVDSuccessfulBanner () {
+	    io.print("=== Edit Complete ===");
+    } 
    // -- "END" Edit DVD Section --
     
     // ---------------------------------------------| 
@@ -198,7 +208,12 @@ public class DVDCollectionView {
     public void displayErrorMessage(String errorMsg) {
 	    io.print("=== ERROR ===");
 	    io.print(errorMsg);
-	}
+    }
+    public void displayDateErrorMessage(String errorMsg) {
+	    io.print("=== Date Format Error ===");
+            io.print("Please Use Date Format: MM-DD-YYYY");
+	    //io.print(errorMsg);
+    }
     // -- "END" Display Error MSG to User Section --
 
     // ---------------------------------------------| 
